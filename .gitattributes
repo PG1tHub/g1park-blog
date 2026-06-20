@@ -1,0 +1,11 @@
+# 맥/윈도우 줄바꿈(CRLF/LF) 충돌 방지 — 저장소는 LF로 통일
+* text=auto eol=lf
+
+# 바이너리는 변환 제외
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
