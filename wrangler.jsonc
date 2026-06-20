@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers 정적 자산(Static Assets) 배포 설정.
+  // `npm run build`가 dist/를 만들고, `npx wrangler deploy`가 그걸 정적 사이트로 올림.
+  "name": "g1park-blog",
+  "compatibility_date": "2026-06-20",
+  "assets": {
+    "directory": "./dist"
+  }
+}
