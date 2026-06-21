@@ -15,11 +15,28 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				padding: 2rem 0 1rem;
 			}
 			.eyebrow {
-				color: var(--accent);
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 0.55rem;
+				margin-bottom: 0.9rem;
+			}
+			.who {
+				color: rgb(var(--gray-dark));
 				font-weight: 700;
-				font-size: 0.95rem;
-				letter-spacing: 0.02em;
-				margin-bottom: 0.6rem;
+				font-size: 1rem;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4em;
+				padding: 0.28em 0.75em;
+				border-radius: 999px;
+				background: color-mix(in srgb, var(--accent) 10%, white);
+				border: 1px solid color-mix(in srgb, var(--accent) 22%, white);
+				color: var(--accent);
+				font-size: 0.82rem;
+				font-weight: 700;
 			}
 			.hero h1 {
 				font-size: clamp(1.9rem, 5.5vw, 2.8rem);
@@ -71,7 +88,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<Header />
 		<main>
 			<section class="hero">
-				<p class="eyebrow">박지원 · AI Engineer @ Mono</p>
+				<p class="eyebrow">
+					<span class="who">박지원</span>
+					<span class="badge">AI Engineer @ Mono</span>
+				</p>
 				<h1>AI 에이전트를 만들며 부딪힌 것들을 기록합니다</h1>
 				<p class="lead">
 					tool calling 루프, 컨텍스트 설계, 멀티에이전트 디버깅처럼 — 추상적 개론 말고
