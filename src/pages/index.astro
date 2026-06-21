@@ -22,15 +22,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				margin-bottom: 0.6rem;
 			}
 			.hero h1 {
-				font-size: 2.8rem;
+				font-size: clamp(1.9rem, 5.5vw, 2.8rem);
 				line-height: 1.15;
 				margin-bottom: 0.8rem;
+				text-wrap: balance;
 			}
 			.lead {
-				font-size: 1.15rem;
+				font-size: clamp(1.05rem, 3vw, 1.18rem);
 				color: rgb(var(--gray-dark));
-				max-width: 38ch;
+				max-width: 46ch;
 				margin-bottom: 1.8rem;
+				text-wrap: pretty;
 			}
 			.cta {
 				display: flex;
@@ -63,11 +65,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				color: #fff;
 				opacity: 0.92;
 			}
-			@media (max-width: 600px) {
-				.hero h1 {
-					font-size: 2.1rem;
-				}
-			}
 		</style>
 	</head>
 	<body>
@@ -75,7 +72,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<main>
 			<section class="hero">
 				<p class="eyebrow">박지원 · AI Engineer @ Mono</p>
-				<h1>AI 에이전트를 만들며<br />부딪힌 것들을 기록합니다</h1>
+				<h1>AI 에이전트를 만들며 부딪힌 것들을 기록합니다</h1>
 				<p class="lead">
 					tool calling 루프, 컨텍스트 설계, 멀티에이전트 디버깅처럼 — 추상적 개론 말고
 					<strong>실제로 겪은 문제와 해결 과정</strong>을 씁니다.
