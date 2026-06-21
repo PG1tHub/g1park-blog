@@ -11,7 +11,7 @@ const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"
   <rect width="1200" height="10" fill="${ACCENT}"/>
   <g font-family="Arial, Helvetica, sans-serif">
     <rect x="80" y="84" width="96" height="96" rx="24" fill="${ACCENT}"/>
-    <text x="128" y="150" font-size="52" font-weight="800" fill="#ffffff" text-anchor="middle">g1</text>
+    <text x="128" y="150" font-size="52" font-weight="800" fill="#ffffff" text-anchor="middle">G1</text>
     <text x="200" y="150" font-size="34" font-weight="600" fill="#9aa4b8">g1park.dev</text>
     <text x="80" y="350" font-size="84" font-weight="800" fill="#ffffff">AI Agent Engineering</text>
     <text x="80" y="424" font-size="36" font-weight="500" fill="#9aa4b8">Building production AI agents end-to-end.</text>
