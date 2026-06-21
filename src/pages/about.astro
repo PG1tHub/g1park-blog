@@ -9,6 +9,22 @@ import profile from '../assets/profile.jpg';
 const title = 'About · 박지원 (Jiwon Park)';
 const description =
 	'Mono에서 프로덕션 AI 에이전트(멀티에이전트·RAG·Text-to-SQL)를 만드는 AI 엔지니어 박지원입니다.';
+
+// 경력 기간 자동 계산 (시작: 2026년 3월) — 빌드 시점 fallback. 브라우저에서 실시간 재계산됨.
+const EXP_START = '2026-03';
+function monthsSince(s: string) {
+	const [y, m] = s.split('-').map(Number);
+	const now = new Date();
+	return (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m) + 1;
+}
+const expMonths = monthsSince(EXP_START);
+const yy = Math.floor(expMonths / 12);
+const mm = expMonths % 12;
+const tenureKo = [yy ? `${yy}년` : '', mm ? `${mm}개월` : ''].filter(Boolean).join(' ') || '0개월';
+const tenureEn =
+	[yy ? `${yy} yr${yy > 1 ? 's' : ''}` : '', mm ? `${mm} mo${mm > 1 ? 's' : ''}` : '']
+		.filter(Boolean)
+		.join(' ') || '0 mos';
 ---
 
 <!doctype html>
@@ -64,6 +80,25 @@ const description =
 				font-size: 0.5em;
 				font-weight: 400;
 				white-space: nowrap;
+			}
+			.exp {
+				border-left: 3px solid color-mix(in srgb, var(--accent) 35%, white);
+				padding-left: 1em;
+				margin: 0.5em 0 1.5em;
+			}
+			.exp-role {
+				margin: 0 0 0.1em;
+				font-weight: 700;
+				color: rgb(var(--black));
+			}
+			.exp-org {
+				margin: 0 0 0.3em;
+			}
+			.exp-meta {
+				margin: 0;
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
+				line-height: 1.5;
 			}
 			.stack {
 				list-style: none;
@@ -123,6 +158,18 @@ const description =
 						공간입니다.
 					</p>
 
+					<h2>경력</h2>
+					<div class="exp">
+						<p class="exp-role">AI Research Engineer · Customer Support AI Agent</p>
+						<p class="exp-org">Mono Communications (모노커뮤니케이션즈) · 정규직</p>
+						<p class="exp-meta">
+							2026.03 – 현재 · <span class="tenure" data-start="2026-03" data-fmt="ko"
+								>{tenureKo}</span
+							>
+						</p>
+						<p class="exp-meta">서울, 대한민국 · 대면근무</p>
+					</div>
+
 					<h2>기술 스택</h2>
 					<ul class="stack">
 						<li><span class="cat">AI / Agents</span> LangGraph · LangChain · RAG · Text-to-SQL · Multi-Agent · Self-Correction</li>
@@ -151,6 +198,18 @@ const description =
 						This blog is where I write up the <strong>real problems I run into — and how I solve
 						them.</strong>
 					</p>
+
+					<h2>Experience</h2>
+					<div class="exp">
+						<p class="exp-role">AI Research Engineer · Customer Support AI Agent</p>
+						<p class="exp-org">Mono Communications · Full-time</p>
+						<p class="exp-meta">
+							Mar 2026 – Present · <span class="tenure" data-start="2026-03" data-fmt="en"
+								>{tenureEn}</span
+							>
+						</p>
+						<p class="exp-meta">Seoul, South Korea · On-site</p>
+					</div>
 
 					<h2>Tech Stack</h2>
 					<ul class="stack">
@@ -190,4 +249,26 @@ const description =
 		saved = localStorage.getItem('about-lang') || 'ko';
 	} catch {}
 	apply(saved);
+
+	// 경력 기간 실시간 계산 — 방문 시점 기준 (빌드 안 해도 항상 최신)
+	function monthsSince(s: string) {
+		const [y, m] = s.split('-').map(Number);
+		const now = new Date();
+		return (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m) + 1;
+	}
+	document.querySelectorAll('.tenure').forEach((node) => {
+		const el = node as HTMLElement;
+		const total = monthsSince(el.dataset.start || '2026-03');
+		const y = Math.floor(total / 12);
+		const mo = total % 12;
+		if (el.dataset.fmt === 'en') {
+			el.textContent =
+				[y ? `${y} yr${y > 1 ? 's' : ''}` : '', mo ? `${mo} mo${mo > 1 ? 's' : ''}` : '']
+					.filter(Boolean)
+					.join(' ') || '0 mos';
+		} else {
+			el.textContent =
+				[y ? `${y}년` : '', mo ? `${mo}개월` : ''].filter(Boolean).join(' ') || '0개월';
+		}
+	});
 </script>
