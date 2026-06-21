@@ -10,7 +10,7 @@ const title = 'About · 박지원 (Jiwon Park)';
 const description =
 	'Mono에서 프로덕션 AI 에이전트(멀티에이전트·RAG·Text-to-SQL)를 만드는 AI 엔지니어 박지원입니다.';
 
-// 경력 기간 자동 계산 (시작: 2026년 3월) — 빌드 시점 fallback. 브라우저에서 실시간 재계산됨.
+// 경력 기간 자동 계산 (시작: 2026년 3월) — 빌드 fallback, 브라우저에서 실시간 재계산.
 const EXP_START = '2026-03';
 function monthsSince(s: string) {
 	const [y, m] = s.split('-').map(Number);
@@ -25,6 +25,13 @@ const tenureEn =
 	[yy ? `${yy} yr${yy > 1 ? 's' : ''}` : '', mm ? `${mm} mo${mm > 1 ? 's' : ''}` : '']
 		.filter(Boolean)
 		.join(' ') || '0 mos';
+
+const stack = [
+	{ cat: 'AI / Agents', items: ['LangGraph', 'LangChain', 'RAG', 'Text-to-SQL', 'Multi-Agent', 'Self-Correction'] },
+	{ cat: 'LLM', items: ['Anthropic Claude API', 'OpenAI API'] },
+	{ cat: 'Data / Infra', items: ['pgvector', 'ChromaDB', 'BGE-M3', 'PostgreSQL', 'Neo4j', 'FastAPI', 'Docker', 'Linux'] },
+	{ cat: 'Backend / Frontend', items: ['Spring Boot', 'React', 'Python', 'Java 21'] },
+];
 ---
 
 <!doctype html>
@@ -33,16 +40,17 @@ const tenureEn =
 		<BaseHead title={title} description={description} />
 		<style>
 			.about {
-				max-width: 720px;
+				max-width: 660px;
 				margin: 0 auto;
 			}
-			.profile {
+
+			/* ── profile header (shared) ── */
+			.phead {
 				text-align: center;
-				margin-bottom: 1.5rem;
 			}
 			.avatar {
-				width: 168px;
-				height: 168px;
+				width: 156px;
+				height: 156px;
 				border-radius: 50%;
 				object-fit: cover;
 				box-shadow: var(--box-shadow);
@@ -51,7 +59,7 @@ const tenureEn =
 				display: flex;
 				justify-content: center;
 				gap: 0.35rem;
-				margin-bottom: 2rem;
+				margin-top: 1.4rem;
 			}
 			.lang-toggle button {
 				font: inherit;
@@ -72,52 +80,127 @@ const tenureEn =
 				border-color: var(--accent);
 				color: #fff;
 			}
+
+			/* ── name ── */
 			.name {
-				margin-bottom: 0.2em;
+				text-align: center;
+				font-size: 2.1rem;
+				line-height: 1.2;
+				margin: 1.4rem 0 0;
 			}
 			.name span {
-				color: rgb(var(--gray));
-				font-size: 0.5em;
-				font-weight: 400;
-				white-space: nowrap;
+				display: block;
+				margin-top: 0.35rem;
+				color: var(--accent);
+				font-size: 1rem;
+				font-weight: 700;
 			}
-			.exp {
-				border-left: 3px solid color-mix(in srgb, var(--accent) 35%, white);
-				padding-left: 1em;
-				margin: 0.5em 0 1.5em;
+
+			/* ── intro ── */
+			.intro {
+				margin-top: 1.6rem;
+				color: rgb(var(--gray-dark));
+			}
+
+			/* ── sections: divider ABOVE the heading ── */
+			.sec {
+				margin-top: 2.8rem;
+				padding-top: 2.8rem;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.sec-title {
+				font-size: 1.35rem;
+				font-weight: 800;
+				letter-spacing: -0.01em;
+				margin: 0 0 1.3rem;
+			}
+
+			/* ── experience card ── */
+			.exp-card {
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 14px;
+				padding: 1.2rem 1.35rem;
+				background: #fff;
+			}
+			.exp-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				gap: 0.8rem;
+				flex-wrap: wrap;
 			}
 			.exp-role {
-				margin: 0 0 0.1em;
+				margin: 0 0 0.2em;
 				font-weight: 700;
+				font-size: 1.05rem;
 				color: rgb(var(--black));
+				line-height: 1.35;
 			}
 			.exp-org {
-				margin: 0 0 0.3em;
-			}
-			.exp-meta {
 				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.95rem;
-				line-height: 1.5;
+				color: rgb(var(--gray-dark));
 			}
+			.exp-period {
+				flex-shrink: 0;
+				padding: 0.3em 0.75em;
+				border-radius: 999px;
+				background: color-mix(in srgb, var(--accent) 10%, white);
+				border: 1px solid color-mix(in srgb, var(--accent) 22%, white);
+				color: var(--accent);
+				font-size: 0.8rem;
+				font-weight: 700;
+				white-space: nowrap;
+			}
+			.exp-loc {
+				margin: 0.9rem 0 0;
+				color: rgb(var(--gray));
+				font-size: 0.92rem;
+			}
+
+			/* ── tech stack as chips ── */
 			.stack {
+				display: flex;
+				flex-direction: column;
+				gap: 1.35rem;
+			}
+			.stack-cat {
+				display: block;
+				margin-bottom: 0.55rem;
+				font-size: 0.76rem;
+				font-weight: 700;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: rgb(var(--gray));
+			}
+			.chips {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.45rem;
 				list-style: none;
 				padding: 0;
+				margin: 0;
 			}
-			.stack li {
-				margin-bottom: 0.6em;
+			.chips li {
+				padding: 0.34em 0.72em;
+				background: rgb(var(--gray-light));
+				border-radius: 8px;
+				font-size: 0.86rem;
+				font-weight: 600;
+				color: rgb(var(--gray-dark));
+				transition: 0.15s ease;
 			}
-			.stack .cat {
-				display: inline-block;
-				min-width: 9.5em;
-				font-weight: 700;
-				color: rgb(var(--black));
+			.chips li:hover {
+				background: color-mix(in srgb, var(--accent) 12%, white);
+				color: var(--accent);
 			}
+
 			@media (max-width: 600px) {
-				.stack .cat {
-					display: block;
-					min-width: 0;
-					margin-bottom: 0.1em;
+				.name {
+					font-size: 1.8rem;
+				}
+				.sec {
+					margin-top: 2.2rem;
+					padding-top: 2.2rem;
 				}
 			}
 		</style>
@@ -126,101 +209,136 @@ const tenureEn =
 		<Header />
 		<main>
 			<article class="about">
-				<div class="profile">
-					<Image
-						class="avatar"
-						src={profile}
-						alt="박지원 (Jiwon Park)"
-						width={336}
-						height={336}
-					/>
-				</div>
-
-				<div class="lang-toggle" role="group" aria-label="언어 선택 / Language">
-					<button type="button" data-set="ko" class="active">한국어</button>
-					<button type="button" data-set="en">EN</button>
+				<div class="phead">
+					<Image class="avatar" src={profile} alt="박지원 (Jiwon Park)" width={312} height={312} />
+					<div class="lang-toggle" role="group" aria-label="언어 선택 / Language">
+						<button type="button" data-set="ko" class="active">한국어</button>
+						<button type="button" data-set="en">EN</button>
+					</div>
 				</div>
 
 				<!-- 한국어 -->
 				<div data-lang="ko">
-					<h1 class="name">박지원 <span>· AI Engineer</span></h1>
-					<p>
-						프로덕션에서 실제 트래픽을 받는 <strong>AI 에이전트</strong>를 아키텍처 설계부터
-						배포까지 직접 만듭니다.
-					</p>
-					<p>
-						지금은 <strong>Mono</strong>에서 고객지원 AI 에이전트를 만들고 있어요. 멀티에이전트
-						오케스트레이션, RAG, Text-to-SQL까지 — 하나의 시스템을 처음부터 끝까지 책임지고 짜는
-						일을 좋아합니다.
-					</p>
-					<p>
-						이 블로그는 그 과정에서 부딪힌 <strong>실전 문제와 해결 과정</strong>을 기록하는
-						공간입니다.
-					</p>
+					<h1 class="name">박지원<span>AI Engineer</span></h1>
 
-					<h2>경력</h2>
-					<div class="exp">
-						<p class="exp-role">AI Research Engineer · Customer Support AI Agent</p>
-						<p class="exp-org">Mono Communications (모노커뮤니케이션즈) · 정규직</p>
-						<p class="exp-meta">
-							2026.03 – 현재 · <span class="tenure" data-start="2026-03" data-fmt="ko"
-								>{tenureKo}</span
-							>
+					<div class="intro">
+						<p>
+							프로덕션에서 실제 트래픽을 받는 <strong>AI 에이전트</strong>를 아키텍처 설계부터
+							배포까지 직접 만듭니다.
 						</p>
-						<p class="exp-meta">서울, 대한민국 · 대면근무</p>
+						<p>
+							지금은 <strong>Mono</strong>에서 고객지원 AI 에이전트를 만들고 있어요. 멀티에이전트
+							오케스트레이션, RAG, Text-to-SQL까지 — 하나의 시스템을 처음부터 끝까지 책임지고
+							짜는 일을 좋아합니다.
+						</p>
+						<p>
+							이 블로그는 그 과정에서 부딪힌 <strong>실전 문제와 해결 과정</strong>을 기록하는
+							공간입니다.
+						</p>
 					</div>
 
-					<h2>기술 스택</h2>
-					<ul class="stack">
-						<li><span class="cat">AI / Agents</span> LangGraph · LangChain · RAG · Text-to-SQL · Multi-Agent · Self-Correction</li>
-						<li><span class="cat">LLM</span> Anthropic Claude API · OpenAI API</li>
-						<li><span class="cat">Data / Infra</span> pgvector · ChromaDB · BGE-M3 · PostgreSQL · Neo4j · FastAPI · Docker · Linux</li>
-						<li><span class="cat">Backend / Frontend</span> Spring Boot · React · Python · Java 21</li>
-					</ul>
+					<section class="sec">
+						<h2 class="sec-title">경력</h2>
+						<div class="exp-card">
+							<div class="exp-head">
+								<div>
+									<p class="exp-role">AI Research Engineer · Customer Support AI Agent</p>
+									<p class="exp-org">Mono Communications (모노커뮤니케이션즈) · 정규직</p>
+								</div>
+								<span class="exp-period"
+									>2026.03 – 현재 · <span class="tenure" data-start="2026-03" data-fmt="ko"
+										>{tenureKo}</span
+									></span
+								>
+							</div>
+							<p class="exp-loc">서울, 대한민국 · 대면근무</p>
+						</div>
+					</section>
 
-					<h2>링크</h2>
-					<SocialLinks />
+					<section class="sec">
+						<h2 class="sec-title">기술 스택</h2>
+						<div class="stack">
+							{
+								stack.map((g) => (
+									<div class="stack-row">
+										<span class="stack-cat">{g.cat}</span>
+										<ul class="chips">
+											{g.items.map((it) => (
+												<li>{it}</li>
+											))}
+										</ul>
+									</div>
+								))
+							}
+						</div>
+					</section>
+
+					<section class="sec">
+						<h2 class="sec-title">링크</h2>
+						<SocialLinks />
+					</section>
 				</div>
 
 				<!-- English -->
 				<div data-lang="en" hidden>
-					<h1 class="name">Jiwon Park <span>· AI Engineer</span></h1>
-					<p>
-						I build production <strong>AI agents</strong> end-to-end — from architecture to
-						deployment.
-					</p>
-					<p>
-						I'm currently building a customer-support AI agent at <strong>Mono</strong>:
-						multi-agent orchestration, RAG, and Text-to-SQL. I enjoy owning a system from design
-						all the way to production.
-					</p>
-					<p>
-						This blog is where I write up the <strong>real problems I run into — and how I solve
-						them.</strong>
-					</p>
+					<h1 class="name">Jiwon Park<span>AI Engineer</span></h1>
 
-					<h2>Experience</h2>
-					<div class="exp">
-						<p class="exp-role">AI Research Engineer · Customer Support AI Agent</p>
-						<p class="exp-org">Mono Communications · Full-time</p>
-						<p class="exp-meta">
-							Mar 2026 – Present · <span class="tenure" data-start="2026-03" data-fmt="en"
-								>{tenureEn}</span
-							>
+					<div class="intro">
+						<p>
+							I build production <strong>AI agents</strong> end-to-end — from architecture to
+							deployment.
 						</p>
-						<p class="exp-meta">Seoul, South Korea · On-site</p>
+						<p>
+							I'm currently building a customer-support AI agent at <strong>Mono</strong>:
+							multi-agent orchestration, RAG, and Text-to-SQL. I enjoy owning a system from
+							design all the way to production.
+						</p>
+						<p>
+							This blog is where I write up the <strong>real problems I run into — and how I
+							solve them.</strong>
+						</p>
 					</div>
 
-					<h2>Tech Stack</h2>
-					<ul class="stack">
-						<li><span class="cat">AI / Agents</span> LangGraph · LangChain · RAG · Text-to-SQL · Multi-Agent · Self-Correction</li>
-						<li><span class="cat">LLM</span> Anthropic Claude API · OpenAI API</li>
-						<li><span class="cat">Data / Infra</span> pgvector · ChromaDB · BGE-M3 · PostgreSQL · Neo4j · FastAPI · Docker · Linux</li>
-						<li><span class="cat">Backend / Frontend</span> Spring Boot · React · Python · Java 21</li>
-					</ul>
+					<section class="sec">
+						<h2 class="sec-title">Experience</h2>
+						<div class="exp-card">
+							<div class="exp-head">
+								<div>
+									<p class="exp-role">AI Research Engineer · Customer Support AI Agent</p>
+									<p class="exp-org">Mono Communications · Full-time</p>
+								</div>
+								<span class="exp-period"
+									>Mar 2026 – Present · <span class="tenure" data-start="2026-03" data-fmt="en"
+										>{tenureEn}</span
+									></span
+								>
+							</div>
+							<p class="exp-loc">Seoul, South Korea · On-site</p>
+						</div>
+					</section>
 
-					<h2>Links</h2>
-					<SocialLinks />
+					<section class="sec">
+						<h2 class="sec-title">Tech Stack</h2>
+						<div class="stack">
+							{
+								stack.map((g) => (
+									<div class="stack-row">
+										<span class="stack-cat">{g.cat}</span>
+										<ul class="chips">
+											{g.items.map((it) => (
+												<li>{it}</li>
+											))}
+										</ul>
+									</div>
+								))
+							}
+						</div>
+					</section>
+
+					<section class="sec">
+						<h2 class="sec-title">Links</h2>
+						<SocialLinks />
+					</section>
 				</div>
 			</article>
 		</main>
