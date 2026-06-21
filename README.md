@@ -1,63 +1,72 @@
-# Astro Starter Kit: Blog
+# g1park.dev
 
-```sh
-npm create astro@latest -- --template blog
+> Personal tech blog on building **production AI agents** — the real problems I run into, and how I solve them.
+
+[![Live](https://img.shields.io/badge/live-g1park.dev-2337ff)](https://g1park.dev)
+[![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=white)](https://astro.build)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
+
+Built and run by **[Jiwon Park (박지원)](https://github.com/PG1tHub)** — AI Engineer building customer-support AI agents end-to-end (LangGraph · RAG · Text-to-SQL · multi-agent).
+
+🔗 **Live:** https://g1park.dev · **About:** https://g1park.dev/about
+
+---
+
+## Stack
+
+| | |
+|---|---|
+| **Framework** | [Astro](https://astro.build) (static site generation) |
+| **Content** | Markdown / MDX |
+| **Styling** | Tailwind CSS · [Shiki](https://shiki.style) syntax highlighting |
+| **Hosting** | Cloudflare Workers (Static Assets) — auto-deploy on `git push` |
+| **Language** | TypeScript |
+
+## Quick start
+
+```bash
+npm install      # Node 20+ (see .nvmrc → 22)
+npm run dev      # local dev server → http://localhost:4321
+npm run build    # production build → dist/
+npm run preview  # preview the build locally
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Writing a post
 
-Features:
+```bash
+# 1. create a file
+src/content/blog/2026-my-post.md   # copy from _template.md
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+# 2. fill frontmatter (title, description, pubDate, tags, draft)
+# 3. flip draft: false when ready
+# 4. publish
+git push         # → live at g1park.dev in ~1–2 min
+```
 
-## 🚀 Project Structure
+Drafts (`draft: true`) are excluded from the production build and only visible in `npm run dev`.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+src/
+├── content/blog/      # posts (.md / .mdx)
+├── components/        # BaseHead, SocialLinks, Header, Footer …
+├── layouts/           # BlogPost layout
+├── pages/             # index, about, blog/, rss.xml
+├── content.config.ts  # blog frontmatter schema
+└── styles/global.css
+public/                # favicon, og.png, robots.txt
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Push to `main` → Cloudflare Workers Build runs `npm run build`, then `npx wrangler deploy`
+serves `dist/` as static assets (config in [`wrangler.jsonc`](./wrangler.jsonc)).
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+## Docs
 
-Any static assets, like images, can be placed in the `public/` directory.
+Full architecture, infra, and runbook → [**`CLAUDE.md`**](./CLAUDE.md)
 
-## 🧞 Commands
+---
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+<sub>© Jiwon Park · Built with [Astro](https://astro.build)</sub>
