@@ -1,63 +1,214 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import { Image } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import profile from '../assets/profile.jpg';
+
+const title = 'About · 박지원 (Jiwon Park)';
+const description =
+	'Mono에서 프로덕션 AI 에이전트(멀티에이전트·RAG·Text-to-SQL)를 만드는 AI 엔지니어 박지원입니다.';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			.about {
+				max-width: 720px;
+				margin: 0 auto;
+			}
+			.profile {
+				text-align: center;
+				margin-bottom: 1.5rem;
+			}
+			.avatar {
+				width: 168px;
+				height: 168px;
+				border-radius: 50%;
+				object-fit: cover;
+				box-shadow: var(--box-shadow);
+			}
+			.lang-toggle {
+				display: flex;
+				justify-content: center;
+				gap: 0.35rem;
+				margin-bottom: 2rem;
+			}
+			.lang-toggle button {
+				font: inherit;
+				cursor: pointer;
+				padding: 0.3em 0.9em;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 999px;
+				background: #fff;
+				color: rgb(var(--gray));
+				transition: 0.15s ease;
+			}
+			.lang-toggle button:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.lang-toggle button.active {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: #fff;
+			}
+			.name {
+				margin-bottom: 0.2em;
+			}
+			.name span {
+				color: rgb(var(--gray));
+				font-size: 0.5em;
+				font-weight: 400;
+				white-space: nowrap;
+			}
+			.stack {
+				list-style: none;
+				padding: 0;
+			}
+			.stack li {
+				margin-bottom: 0.6em;
+			}
+			.stack .cat {
+				display: inline-block;
+				min-width: 9.5em;
+				font-weight: 700;
+				color: rgb(var(--black));
+			}
+			.links {
+				list-style: none;
+				padding: 0;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem 1.4rem;
+			}
+			.links a {
+				font-weight: 700;
+			}
+			@media (max-width: 600px) {
+				.stack .cat {
+					display: block;
+					min-width: 0;
+					margin-bottom: 0.1em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="about">
+				<div class="profile">
+					<Image
+						class="avatar"
+						src={profile}
+						alt="박지원 (Jiwon Park)"
+						width={336}
+						height={336}
+					/>
+				</div>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+				<div class="lang-toggle" role="group" aria-label="언어 선택 / Language">
+					<button type="button" data-set="ko" class="active">한국어</button>
+					<button type="button" data-set="en">EN</button>
+				</div>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+				<!-- 한국어 -->
+				<div data-lang="ko">
+					<h1 class="name">박지원 <span>· AI Engineer</span></h1>
+					<p>
+						프로덕션에서 실제 트래픽을 받는 <strong>AI 에이전트</strong>를 아키텍처 설계부터
+						배포까지 직접 만듭니다.
+					</p>
+					<p>
+						지금은 <strong>Mono</strong>에서 고객지원 AI 에이전트를 만들고 있어요. 멀티에이전트
+						오케스트레이션, RAG, Text-to-SQL까지 — 하나의 시스템을 처음부터 끝까지 책임지고 짜는
+						일을 좋아합니다.
+					</p>
+					<p>
+						이 블로그는 그 과정에서 부딪힌 <strong>실전 문제와 해결 과정</strong>을 기록하는
+						공간입니다.
+					</p>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+					<h2>기술 스택</h2>
+					<ul class="stack">
+						<li><span class="cat">AI / Agents</span> LangGraph · LangChain · RAG · Text-to-SQL · Multi-Agent · Self-Correction</li>
+						<li><span class="cat">LLM</span> Anthropic Claude API · OpenAI API</li>
+						<li><span class="cat">Data / Infra</span> pgvector · ChromaDB · BGE-M3 · PostgreSQL · Neo4j · FastAPI · Docker · Linux</li>
+						<li><span class="cat">Backend / Frontend</span> Spring Boot · React · Python · Java 21</li>
+					</ul>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+					<h2>링크</h2>
+					<ul class="links">
+						<li><a href="https://github.com/PG1tHub" target="_blank" rel="noopener">GitHub ↗</a></li>
+						<li><a href="https://www.linkedin.com/in/jiwon-park-g1-pg1thub/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+						<li><a href="mailto:parkpark827@gmail.com">Email ↗</a></li>
+					</ul>
+				</div>
+
+				<!-- English -->
+				<div data-lang="en" hidden>
+					<h1 class="name">Jiwon Park <span>· AI Engineer</span></h1>
+					<p>
+						I build production <strong>AI agents</strong> end-to-end — from architecture to
+						deployment.
+					</p>
+					<p>
+						I'm currently building a customer-support AI agent at <strong>Mono</strong>:
+						multi-agent orchestration, RAG, and Text-to-SQL. I enjoy owning a system from design
+						all the way to production.
+					</p>
+					<p>
+						This blog is where I write up the <strong>real problems I run into — and how I solve
+						them.</strong>
+					</p>
+
+					<h2>Tech Stack</h2>
+					<ul class="stack">
+						<li><span class="cat">AI / Agents</span> LangGraph · LangChain · RAG · Text-to-SQL · Multi-Agent · Self-Correction</li>
+						<li><span class="cat">LLM</span> Anthropic Claude API · OpenAI API</li>
+						<li><span class="cat">Data / Infra</span> pgvector · ChromaDB · BGE-M3 · PostgreSQL · Neo4j · FastAPI · Docker · Linux</li>
+						<li><span class="cat">Backend / Frontend</span> Spring Boot · React · Python · Java 21</li>
+					</ul>
+
+					<h2>Links</h2>
+					<ul class="links">
+						<li><a href="https://github.com/PG1tHub" target="_blank" rel="noopener">GitHub ↗</a></li>
+						<li><a href="https://www.linkedin.com/in/jiwon-park-g1-pg1thub/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+						<li><a href="mailto:parkpark827@gmail.com">Email ↗</a></li>
+					</ul>
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<script>
+	const buttons = Array.from(
+		document.querySelectorAll('.lang-toggle button'),
+	) as HTMLButtonElement[];
+	const blocks = Array.from(
+		document.querySelectorAll('[data-lang]'),
+	) as HTMLElement[];
+
+	function apply(lang: string) {
+		blocks.forEach((b) => (b.hidden = b.dataset.lang !== lang));
+		buttons.forEach((btn) => btn.classList.toggle('active', btn.dataset.set === lang));
+		try {
+			localStorage.setItem('about-lang', lang);
+		} catch {}
+	}
+
+	buttons.forEach((btn) =>
+		btn.addEventListener('click', () => apply(btn.dataset.set || 'ko')),
+	);
+
+	let saved = 'ko';
+	try {
+		saved = localStorage.getItem('about-lang') || 'ko';
+	} catch {}
+	apply(saved);
+</script>
